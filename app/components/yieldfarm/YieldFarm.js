@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Flex, Button, Spinner } from '@chakra-ui/react';
+import { Box, Flex, Button, Tooltip } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import ShowYieldFarmDetails from './ShowYieldFarmDetails';
 import BNBImage from '../../assets/bnb.svg';
@@ -9,10 +9,6 @@ import BUSDImage from '../../assets/busd.svg';
 
 const YieldFarm = ({ content, wallet }) => {
   const [showYieldfarm, setShowYieldFarm] = useState(false);
-
-  const formatAmount = (value) => {
-    return (parseFloat(value)).toLocaleString();
-  }
 
   return (
     <>
@@ -71,7 +67,7 @@ const YieldFarm = ({ content, wallet }) => {
             APY
           </Box>
           <Box marginTop="15px" align="left">
-            {formatAmount(content.ARYValue)} %
+            {content.APY}
           </Box>
         </Flex>
         <Flex justifyContent="space-between" width="100%">
@@ -84,27 +80,29 @@ const YieldFarm = ({ content, wallet }) => {
             Total Liquidity
           </Box>
           <Box marginTop="15px" align="left">
-            {content.totalLiquidity ? `$ ${formatAmount(content.totalLiquidity)}` : <Spinner speed="0.65s"
-
-              color="blue.500" />}
+            ${content.totalLiquidity}
           </Box>
         </Flex>
-        <Box align="right" mt={['4', '0']} ml="2">
-          <Button
-            w={['100%', '100%', '146px']}
-            h="40px"
-            borderRadius="12px"
-            bg="rgba(64, 186, 213, 0.1);"
-            color="#40BAD5"
-            border="0"
-            mb="4"
-            cursor="pointer"
-            _hover={{ color: '#423a85' }}
-            onClick={() => setShowYieldFarm(!showYieldfarm)}
-          >
-            Unlock
+        <Tooltip label="In few days" bg="#120136" aria-label="A tooltip">
+          <Box align="right" mt={['4', '0']} ml="2">
+
+            <Button
+              w={['100%', '100%', '146px']}
+              h="40px"
+              borderRadius="12px"
+              bg="rgba(64, 186, 213, 0.1);"
+              color="#40BAD5"
+              border="0"
+              mb="4"
+              disabled
+              cursor="not-allowed"
+              _hover={{ color: '#423a85' }}
+            // onClick={() => setShowYieldFarm(!showYieldfarm)}
+            >
+              Unlock
           </Button>
-        </Box>
+          </Box>
+        </Tooltip>
 
       </Flex>
       {showYieldfarm && (
